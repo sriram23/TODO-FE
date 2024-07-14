@@ -1,8 +1,10 @@
 // Login.js
 import { useState } from 'react';
 import { Box, FormControl, FormLabel, Input, Button, Heading, VStack } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+    const navigate = useNavigate()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -11,6 +13,9 @@ const Login = () => {
     // Handle login logic here
     console.log('Email:', email);
     console.log('Password:', password);
+    sessionStorage.setItem('todo_token', email);
+    window.dispatchEvent(new Event("storage"));
+    navigate('/')
   };
 
   return (
