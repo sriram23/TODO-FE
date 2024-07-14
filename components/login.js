@@ -2,20 +2,36 @@
 import { useState } from 'react';
 import { Box, FormControl, FormLabel, Input, Button, Heading, VStack } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../helpers/axios';
+import constants from '../helpers/constants';
+import axiosInstance from '../helpers/axios';
 
 const Login = () => {
     const navigate = useNavigate()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     // Handle login logic here
-    console.log('Email:', email);
-    console.log('Password:', password);
-    sessionStorage.setItem('todo_token', email);
-    window.dispatchEvent(new Event("storage"));
-    navigate('/')
+    // console.log('Email:', email);
+    // console.log('Password:', password);
+    const payload = {
+        email,
+        password
+    }
+    try{
+        const response = await axiosInstance[constants.LOGIN.method](constants.LOGIN.path, payload)
+        console.log("Response: ", response)
+        if(response?.data?.token) {
+            sessionStorage.setItem('todo_token', response?.data?.token);
+            sessionStorage.setItem('email', response?.data?.email);
+            window.dispatchEvent(new Event("storage"));
+            navigate('/')
+        }
+    } catch(err) {
+        alert("Something went wrong while logging in: ",err)
+    }
   };
 
   return (
