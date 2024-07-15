@@ -22,7 +22,6 @@ const Login = () => {
     }
     try{
         const response = await axiosInstance[constants.LOGIN.method](constants.LOGIN.path, payload)
-        console.log("Response: ", response)
         if(response?.data?.token) {
             sessionStorage.setItem('todo_token', response?.data?.token);
             sessionStorage.setItem('email', response?.data?.email);
@@ -30,7 +29,7 @@ const Login = () => {
             navigate('/')
         }
     } catch(err) {
-        alert("Something went wrong while logging in: ",err)
+        alert("Something went wrong while logging in: "+err)
     }
   };
 

@@ -1,16 +1,28 @@
 // Signup.js
 import React, { useState } from 'react';
 import { Box, FormControl, FormLabel, Input, Button, Heading, VStack } from '@chakra-ui/react';
+import axiosInstance from '../helpers/axios';
+import constants from '../helpers/constants';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
+  const navigate = useNavigate()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    // Handle signup logic here
-    console.log('Email:', email);
-    console.log('Password:', password);
+    const payload = {
+      email,
+      password
+    }
+    try{
+      const response = await axiosInstance[constants.SIGNUP.method](constants.SIGNUP.path, payload)
+      alert(response.data.message)
+      navigate('/login')
+    } catch(err) {
+      alert("Something went wrong: "+ err)
+    }
   };
 
   return (

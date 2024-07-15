@@ -1,4 +1,4 @@
-export default CONSTANTS = {
+export default {
     BASE_URL: 'https://todo-be-1.vercel.app',
     LOGIN: {
         method: 'post',
