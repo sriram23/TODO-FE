@@ -12,7 +12,7 @@ const axiosInstance = axios.create({
 // Add a request interceptor to include the token in the headers if it exists
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = sessionStorage.getItem('token');
+    const token = sessionStorage.getItem('todo_token');
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }
