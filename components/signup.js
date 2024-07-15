@@ -4,11 +4,13 @@ import { Box, FormControl, FormLabel, Input, Button, Heading, VStack } from '@ch
 import axiosInstance from '../helpers/axios';
 import constants from '../helpers/constants';
 import { useNavigate } from 'react-router-dom';
+import AlertComponent from './AlertComponent';
 
 const Signup = () => {
   const navigate = useNavigate()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [alert, setAlert] = useState({ message: '', type: '' });
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -18,10 +20,16 @@ const Signup = () => {
     }
     try{
       const response = await axiosInstance[constants.SIGNUP.method](constants.SIGNUP.path, payload)
-      alert(response.data.message)
-      navigate('/login')
+      setAlert({ message: response.data.message, type: "success"})
+        setTimeout(() => {
+          setAlert({message: "", type: ""})
+          navigate('/login')
+        }, 3000)
     } catch(err) {
-      alert("Something went wrong: "+ err)
+      setAlert({ message: err.message, type: "error"})
+        setTimeout(() => {
+          setAlert({message: "", type: ""})
+        }, 3000)
     }
   };
 
@@ -51,6 +59,7 @@ const Signup = () => {
           </Button>
         </VStack>
       </form>
+      {alert.message && <Box m={2}><AlertComponent message={alert.message} type={alert.type} /></Box>}
     </Box>
   );
 };

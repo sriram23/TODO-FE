@@ -5,17 +5,16 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../helpers/axios';
 import constants from '../helpers/constants';
 import axiosInstance from '../helpers/axios';
+import AlertComponent from './AlertComponent';
 
 const Login = () => {
     const navigate = useNavigate()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [alert, setAlert] = useState({ message: '', type: '' });
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // Handle login logic here
-    // console.log('Email:', email);
-    // console.log('Password:', password);
     const payload = {
         email,
         password
@@ -29,7 +28,11 @@ const Login = () => {
             navigate('/')
         }
     } catch(err) {
-        alert("Something went wrong while logging in: "+err)
+        // alert("Something went wrong while logging in: "+err)
+        setAlert({ message: err.message, type: "error"})
+        setTimeout(() => {
+          setAlert({message: "", type: ""})
+        }, 3000)
     }
   };
 
@@ -59,6 +62,7 @@ const Login = () => {
           </Button>
         </VStack>
       </form>
+      {alert.message && <Box m={2}><AlertComponent message={alert.message} type={alert.type} /></Box>}
     </Box>
   );
 };
