@@ -26,7 +26,11 @@ const Signup = () => {
           navigate('/login')
         }, 3000)
     } catch(err) {
-      setAlert({ message: err.message, type: "error"})
+      setAlert({ message: err.response.data.error
+        ? err.response.data.error
+        : err.message
+        ? err.message
+        :"Signup Failed: Please check your details and try again.", type: "error"})
         setTimeout(() => {
           setAlert({message: "", type: ""})
         }, 3000)
