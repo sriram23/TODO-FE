@@ -30,10 +30,10 @@ const Header = () => {
     }, [])
   return (
     <Box bg="teal.500" p={4}>
-      <Flex align="center" maxW="1200px" mx="auto">
-        <Heading as={Link} to="/" color="white" size="lg">Todo</Heading>
+      <Flex direction={{ base: 'column', md: 'row'}} align={{ base: 'stretch', md: 'center'}} justify="center" maxW="1200px" mx="auto">
+        <Heading textAlign="center" as={Link} to="/" color="white" size="lg">Todo</Heading>
         <Spacer />
-        {email && <Text color='white' size='md' mr={4}>{email}</Text>}
+        {email && <Text color='white' textAlign="center" size='md' m={4}>{email}</Text>}
         <Button onClick={handleLogin} colorScheme="gray" color="white" _hover={{bg: 'white', color: "teal"}} variant="outline" mr={2}>{loginText}</Button>
         {loginText === 'Login' && <Button as={Link} to='/signup' colorScheme="teal" variant="solid">Sign Up</Button>}
       </Flex>
